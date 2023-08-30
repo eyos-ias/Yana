@@ -6,7 +6,6 @@
     let autoFocus = false;
     afterUpdate(() => {
         if(autoFocus){
-            console.log(focusElementId)
             let focusElement = document.getElementById(focusElementId);
             focusElement && focusElement.focus();
             autoFocus = false;
@@ -20,7 +19,10 @@
         { id: 654684, html: "this is the", tag: "h1" },
         { id: 5674567, html: "this is the beauty of it all his is the bea uty of it all his is the be auty of i t all", tag: "p" },
         { id: 2432435, html: "beauty of it all", tag: "h1" },
-        { id: 9567547, html: "this is the beauty of it all his is the beauty of it al lh is is the beauty of it all his is the beauty of it all", tag: "p" }
+        { id: 98765, html: "beauty of it all Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, sunt! Lorem ipsum dolor sit amet, " +
+                "consectetur adipisicing elit. Adipisci alias aliquid architecto, dolore fugit impedit maxime nam quasi veniam voluptas?", tag: "q" },
+        { id: 565467876, html: "this is the beauty of it all his is the beauty of it al lh is is the beauty of it all his is the beauty of it all", tag: "p" },
+        { id: 9567547, html: "this is the beauty of it all his is the beauty of it al lh is is the beauty of it all his is the beauty of it all", tag: "q" },
     ];
 
     function handleKeydown(e, idx){
@@ -59,14 +61,33 @@
                 on:input={(e)=>handleInput(e,idx)}
                 on:keydown={(e)=> handleKeydown(e,idx)}
             >{block.html}</h1>
-        {:else}
+        {:else if (block.tag) === "p"}
             <p contenteditable="true"
                id={block.id}
                on:input={(e)=> handleInput(e,idx)}
                on:keydown={(e)=> handleKeydown(e,idx)}
             >{block.html}</p>
+        {:else if (block.tag) === "q"}
+            <blockquote
+                    id={block.id}
+            >
+                <span id="pushpin">📌</span>
+                <span contenteditable="true"
+                      id="callouttext"
+                      on:input={(e)=> handleInput(e,idx)}
+                      on:keydown={(e)=> handleKeydown(e,idx)}
+            >{block.html}</span>
+            </blockquote>
         {/if}
     {/each}
+
+    <div>
+
+
+    </div>
+
+
+
 
 
 
@@ -94,7 +115,8 @@
 
         padding: 20px 10px;
         border: solid red 2px;
-        width: 1000px;
+        max-width: 1000px;
+        min-width: 400px;
 
         background: whitesmoke;
 
@@ -111,7 +133,6 @@
         color: black;
         padding: 2px;
         margin: 14px 0 2px;
-
     }
     section p{
         text-align: start;
@@ -121,12 +142,48 @@
         width: 100%;
         overflow: clip;
         overflow-wrap: normal;
+    }
 
+    section blockquote{
+        text-align: start;
+        padding: 2px;
+        margin: 7px 0;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        border-left: solid 4px black;
+        background: rgba(68, 68, 68, 0.14);
+    }
+    section blockquote #pushpin{
+        font-size: large;
+        font-weight: bold;
+        color: black;
+
+        width: fit-content;
+        margin: 0.5em;
+
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+    }
+    section blockquote #callouttext{
+        padding: 4px;
+    }
+    section *:hover:not(span):not(:focus){
+        background: rgba(58, 58, 250, 0.1);
+        outline: solid 0.2px rgba(58, 58, 250, 0.3);
     }
 
     section *:focus{
         background: rgba(58, 58, 250, 0.2);
     }
+
+    section *:active{
+        background: rgba(58, 58, 250, 0.2);
+    }
+
 
 
 

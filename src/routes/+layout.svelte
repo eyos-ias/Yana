@@ -7,9 +7,13 @@
 </script>
 
 <div class="app">
+
 <Navbar/>
+
 	<main>
+
 		<slot />
+		
 	</main>
 
 	<footer>
@@ -34,18 +38,6 @@
 		margin: 0 auto;
 		box-sizing: border-box;
 		align-items: center;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
 	}
 
 	@media (min-width: 480px) {

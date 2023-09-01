@@ -49,7 +49,7 @@
     <meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<section>
+<section class="max-w-prose lg:text-lg prose prose-slate mx-auto mt-8 lg:prose-lg">
     <h2>
         <strong>Write your note</strong>
     </h2>
@@ -57,6 +57,7 @@
     {#each blocks as block, idx (block.id)}
         {#if (block.tag) === "h1"}
             <h1 contenteditable="true"
+                class="text-4xl"
                 id={block.id}
                 on:input={(e)=>handleInput(e,idx)}
                 on:keydown={(e)=> handleKeydown(e,idx)}
@@ -70,7 +71,9 @@
         {:else if (block.tag) === "q"}
             <blockquote
                     id={block.id}
+                    class="text-slate-700 italic"
             >
+
                 <span id="pushpin">📌</span>
                 <span contenteditable="true"
                       id="callouttext"
@@ -94,6 +97,8 @@
 <!--    <h1 contenteditable="true"> I am editable by the user </h1>-->
 <!--    <p contenteditable="true">This is a Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, cumque dolores-->
 <!--        enim est hic iure maiores praesentium quam sunt ullam?</p>-->
+
+
 
 
 
@@ -133,6 +138,8 @@
         color: black;
         padding: 2px;
         margin: 14px 0 2px;
+        border-radius: 2px;
+        background: rgba(112, 128, 144, 0.19);
     }
     section p{
         text-align: start;
@@ -154,7 +161,7 @@
         align-items: center;
 
         border-left: solid 4px black;
-        background: rgba(68, 68, 68, 0.14);
+
     }
     section blockquote #pushpin{
         font-size: large;

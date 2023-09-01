@@ -1,11 +1,15 @@
 <script>
 	import Header from './Header.svelte';
 	import './styles.css';
+	import "../app.css";
 </script>
 
 <div class="app">
+	<h1 class="text-3xl font-bold underline">
+		Hello world!
+	</h1>
+	<h1>Garlic bread with cheese: What the science tells us</h1>
 	<Header />
-
 	<main>
 		<slot />
 	</main>

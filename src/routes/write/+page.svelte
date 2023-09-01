@@ -10,8 +10,9 @@
             focusElement && focusElement.focus();
             autoFocus = false;
         }
-
     });
+
+    let showOptions = null;
 
 
 
@@ -42,6 +43,15 @@
     function handleInput(e, idx){
             blocks[idx].html = e.target.textContent;
     }
+
+    function changeTag(preferedTag, index){
+        if(preferedTag === "Paragraph")
+            blocks[index].tag = 'p'
+        else if(preferedTag === "Heading")
+            blocks[index].tag = 'h1'
+        else if(preferedTag === "Quote")
+            blocks[index].tag = 'q'
+    }
 </script>
 
 <svelte:head>
@@ -59,11 +69,16 @@
 
 
             {#if (block.tag) === "h1"}
-                <div class="hContainer">
-                <span class="options">
+
+                <div class="hContainer textBlock" on:mouseenter={() => showOptions = idx} on:mouseleave={() => showOptions = null}>
+                <span class="options" class:visible={showOptions === idx}>
         <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
             <path fill="#000000" d="M108 60a16 16 0 1 1-16-16a16 16 0 0 1 16 16Zm56 16a16 16 0 1 0-16-16a16 16 0 0 0 16 16Zm-72 36a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm-72 68a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Z"/>
         </svg>
+                        <span class="dropdown">
+                            <button on:click={e=> changeTag(e.target.textContent, idx)}>Paragraph</button>
+                            <button on:click={e=> changeTag(e.target.textContent, idx)}>Quote</button>
+                        </span>
         </span>
                     <h1 contenteditable="true"
                         class="text-4xl"
@@ -75,11 +90,16 @@
                 </div>
 
             {:else if (block.tag) === "p"}
-                <div class="pContainer">
-                     <span class="options">
+
+                <div class="pContainer textBlock" on:mouseenter={() => showOptions = idx} on:mouseleave={() => showOptions = null}>
+                     <span class="options" class:visible={showOptions === idx}>
         <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
             <path fill="#000000" d="M108 60a16 16 0 1 1-16-16a16 16 0 0 1 16 16Zm56 16a16 16 0 1 0-16-16a16 16 0 0 0 16 16Zm-72 36a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm-72 68a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Z"/>
         </svg>
+                         <ul class="dropdown">
+                            <button on:click={e=> changeTag(e.target.textContent, idx)}>Heading</button>
+                            <button on:click={e=> changeTag(e.target.textContent, idx)}>Quote</button>
+                        </ul>
         </span>
                     <p contenteditable="true"
                        id={block.id}
@@ -89,11 +109,16 @@
                 </div>
 
             {:else if (block.tag) === "q"}
-                <div class="qContainer">
-                    <span class="options">
+                <div class="qContainer textBlock" on:mouseenter={() => showOptions = idx} on:mouseleave={() => showOptions = null}>
+                    <span class="options" class:visible={showOptions === idx}>
         <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
             <path fill="#000000" d="M108 60a16 16 0 1 1-16-16a16 16 0 0 1 16 16Zm56 16a16 16 0 1 0-16-16a16 16 0 0 0 16 16Zm-72 36a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm-72 68a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Z"/>
         </svg>
+                        <ul class="dropdown">
+                            <button on:click={e=> changeTag(e.target.textContent, idx)}>Heading</button>
+                            <button on:click={e=> changeTag(e.target.textContent, idx)}>Paragraph</button>
+                        </ul>
+
         </span>
                     <blockquote
                             id={block.id}
@@ -115,7 +140,6 @@
     </div>
 </section>
 <button on:click={()=>{console.log(blocks)}}>All</button>
-
 
 
 <style>
@@ -154,7 +178,7 @@
     section p {
         text-align: justify;
         color: black;
-        padding: 2px;
+        padding: 4px;
         width: 100%;
         overflow-wrap: normal;
     }
@@ -163,8 +187,9 @@
         text-align: start;
         text-transform: capitalize;
         border-radius: 2px;
-        background: rgba(112, 128, 144, 0.19);
+        background: rgba(81, 93, 104, 0.06);
         height: 100%;
+
     }
 
     section blockquote {
@@ -228,8 +253,15 @@
     }
 
     .options {
-        visibility: visible;
+        visibility: hidden;
         margin: 0 2px;
+        cursor: pointer;
+    }
+    .options.visible {
+        visibility: visible;
+    }
+    .options:hover > span{
+        display: block;
     }
 
     .options:hover {
@@ -237,4 +269,32 @@
         width: fit-content;
         border-radius: 2px;
     }
+
+    .dropdown {
+        display: none;
+        position: absolute;
+        width: fit-content;
+
+        background-color: #d3d3d3;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        color: black;
+        border-radius: 3px;
+        z-index: 1;
+    }
+    .dropdown button{
+        border-radius: 3px;
+
+        user-select: none;
+    }
+
+    /* Show the dropdown when the container is hovered over */
+    .options:hover .dropdown{
+        display: block;
+    }
+    .dropdown button:hover{
+        background: slategray;
+        color: whitesmoke;
+
+    }
+
 </style>

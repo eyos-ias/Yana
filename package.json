@@ -28,6 +28,7 @@
 	"type": "module",
 	"dependencies": {
 		"daisyui": "^3.6.4",
+		"svelte-copy": "^1.4.1",
 		"uuid": "^9.0.0"
 	}
 }

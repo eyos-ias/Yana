@@ -159,7 +159,7 @@
         border: solid red 2px;
         max-width: 600px;
         min-width: 400px;
-        background: whitesmoke;
+        background: white;
     }
 
     .container {

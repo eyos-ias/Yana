@@ -54,47 +54,22 @@
     }
 </script>
 
-<div >
-    <h1>{ register ? "Register" : "Login" }</h1>
-    <form >
-        <input type="email" bind:value={email} placeholder="email">
-        <input type="password" bind:value={password} placeholder="password">
-        {#if register}
-        <input type="password" bind:value={confirmPassword} placeholder="Confirm password">
-        {/if}
-        <button on:click={handleSubmit}>submit</button>
+<div class=" w-[50%] mx-auto p-4 bg-white rounded shadow-md">
+    <h1 class="text-2xl font-bold mb-4">{register ? "Register" : "Login"}</h1>
+    <form class="flex flex-col">
+      <input type="email" bind:value={email} placeholder="Email" class="border border-gray-300 rounded px-3 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <input type="password" bind:value={password} placeholder="Password" class="border border-gray-300 rounded px-3 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      {#if register}
+      <input type="password" bind:value={confirmPassword} placeholder="Confirm Password" class="border border-gray-300 rounded px-3 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      {/if}
+      <button on:click={handleSubmit} class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">Submit</button>
     </form>
-    {#if register }
-     <p>Already have a account? <span on:click={() => register=false} class="bold">Login</span> </p>
+    {#if register}
+    <p class=" text-center pt-5" >Already have an account? <span on:click={() => register=false} class="font-bold cursor-pointer text-blue-500">Login</span></p>
     {:else}
-    <p>Don't have an account? <span on:click={() => register=true} class="bold">Register</span> </p>
+    <p class="text-center pt-5">Don't have an account? <span on:click={() => register=true} class="font-bold cursor-pointer text-blue-500">Register</span></p>
     {/if}
-    <p class="error">{error}</p>
-</div>
+    <p class="text-red-500 mt-2">{error}</p>
+  </div>
 
 
-<style>
-
-    .bold{
-        font-weight: bolder;
-        cursor: pointer;
-    }
-    div{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    form{
-        display:flex;
-        flex-direction: column;
-        width: 50%;
-    }
-    input{
-        margin: 10px 0;
-        padding: 10px;
-    }
-    button{
-        padding: 10px;
-        cursor: pointer;
-    }
-</style>

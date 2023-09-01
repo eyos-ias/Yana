@@ -1,5 +1,5 @@
 <script>
-	import Counter from './Counter.svelte';
+
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
 </script>
@@ -11,6 +11,7 @@
 
 <section>
 	<h1>
+		<button class="btn btn-accent">Accent</button>
 		<span class="welcome">
 			<picture>
 				<source srcset={welcome} type="image/webp" />
@@ -25,7 +26,6 @@
 		try editing <strong>src/routes/+page.svelte</strong>
 	</h2>
 
-	<Counter />
 </section>
 
 <style>

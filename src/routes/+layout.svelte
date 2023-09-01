@@ -16,9 +16,7 @@
 		
 	</main>
 
-	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer>
+
 </div>
 
 <style>
@@ -40,9 +38,5 @@
 		align-items: center;
 	}
 
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
+
 </style>

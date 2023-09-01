@@ -11,6 +11,7 @@
 
 <section>
 	<h1>
+		<button class="btn btn-accent">Accent</button>
 		<span class="welcome">
 			<picture>
 				<source srcset={welcome} type="image/webp" />

@@ -55,144 +55,186 @@
     </h2>
 
     {#each blocks as block, idx (block.id)}
-        {#if (block.tag) === "h1"}
-            <h1 contenteditable="true"
-                class="text-4xl"
-                id={block.id}
-                on:input={(e)=>handleInput(e,idx)}
-                on:keydown={(e)=> handleKeydown(e,idx)}
-            >{block.html}</h1>
-        {:else if (block.tag) === "p"}
-            <p contenteditable="true"
-               id={block.id}
-               on:input={(e)=> handleInput(e,idx)}
-               on:keydown={(e)=> handleKeydown(e,idx)}
-            >{block.html}</p>
-        {:else if (block.tag) === "q"}
-            <blockquote
-                    id={block.id}
-                    class="text-slate-700 italic"
-            >
+        <div class="container">
 
-                <span id="pushpin">📌</span>
-                <span contenteditable="true"
-                      id="callouttext"
-                      on:input={(e)=> handleInput(e,idx)}
-                      on:keydown={(e)=> handleKeydown(e,idx)}
-            >{block.html}</span>
-            </blockquote>
-        {/if}
+
+            {#if (block.tag) === "h1"}
+                <div class="hContainer">
+                <span class="options">
+        <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#000000" d="M108 60a16 16 0 1 1-16-16a16 16 0 0 1 16 16Zm56 16a16 16 0 1 0-16-16a16 16 0 0 0 16 16Zm-72 36a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm-72 68a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Z"/>
+        </svg>
+        </span>
+                    <h1 contenteditable="true"
+                        class="text-4xl"
+                        id={block.id}
+                        on:input={(e)=>handleInput(e,idx)}
+                        on:keydown={(e)=> handleKeydown(e,idx)}
+                    >
+                        {block.html}</h1>
+                </div>
+
+            {:else if (block.tag) === "p"}
+                <div class="pContainer">
+                     <span class="options">
+        <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#000000" d="M108 60a16 16 0 1 1-16-16a16 16 0 0 1 16 16Zm56 16a16 16 0 1 0-16-16a16 16 0 0 0 16 16Zm-72 36a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm-72 68a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Z"/>
+        </svg>
+        </span>
+                    <p contenteditable="true"
+                       id={block.id}
+                       on:input={(e)=> handleInput(e,idx)}
+                       on:keydown={(e)=> handleKeydown(e,idx)}
+                    >{block.html}</p>
+                </div>
+
+            {:else if (block.tag) === "q"}
+                <div class="qContainer">
+                    <span class="options">
+        <svg width="20" height="20" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#000000" d="M108 60a16 16 0 1 1-16-16a16 16 0 0 1 16 16Zm56 16a16 16 0 1 0-16-16a16 16 0 0 0 16 16Zm-72 36a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm-72 68a16 16 0 1 0 16 16a16 16 0 0 0-16-16Zm72 0a16 16 0 1 0 16 16a16 16 0 0 0-16-16Z"/>
+        </svg>
+        </span>
+                    <blockquote
+                            id={block.id}
+                            class="text-slate-700 italic"
+                    >
+                        <span id="pushpin">📌</span>
+                        <span contenteditable="true"
+                              id="callouttext"
+                              on:input={(e)=> handleInput(e,idx)}
+                              on:keydown={(e)=> handleKeydown(e,idx)}
+                        >{block.html}</span>
+                    </blockquote>
+                </div>
+
+            {/if}
+        </div>
     {/each}
-
     <div>
-
-
     </div>
-
-
-
-
-
-
-<!--    <h1 contenteditable="true"> I am editable by the user </h1>-->
-<!--    <p contenteditable="true">This is a Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, cumque dolores-->
-<!--        enim est hic iure maiores praesentium quam sunt ullam?</p>-->
-
-
-
-
-
 </section>
 <button on:click={()=>{console.log(blocks)}}>All</button>
 
+
+
 <style>
-    *{
+    * {
         padding: 0;
         margin: 0;
         box-sizing: border-box;
     }
+
     section {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         flex: 0.6;
-
         padding: 20px 10px;
         border: solid red 2px;
-        max-width: 1000px;
+        max-width: 600px;
         min-width: 400px;
-
         background: whitesmoke;
-
-    }
-    section *{
-        width: 100%;
-        border: none;
-        background: transparent;
-
-    }
-    section h1{
-        text-transform: capitalize;
-        text-align: start;
-        color: black;
-        padding: 2px;
-        margin: 14px 0 2px;
-        border-radius: 2px;
-        background: rgba(112, 128, 144, 0.19);
-    }
-    section p{
-        text-align: start;
-        color: black;
-        padding: 2px;
-        margin: 2px;
-        width: 100%;
-        overflow: clip;
-        overflow-wrap: normal;
     }
 
-    section blockquote{
-        text-align: start;
-        padding: 2px;
-        margin: 7px 0;
-
+    .container {
         display: flex;
         flex-direction: row;
         align-items: center;
-
-        border-left: solid 4px black;
-
     }
-    section blockquote #pushpin{
+
+    section *:not(span) {
+        width: 100%;
+        border: none;
+        background: transparent;
+    }
+
+    section h1,
+    section p {
+        text-align: justify;
+        color: black;
+        padding: 2px;
+        width: 100%;
+        overflow-wrap: normal;
+    }
+
+    section h1 {
+        text-align: start;
+        text-transform: capitalize;
+        border-radius: 2px;
+        background: rgba(112, 128, 144, 0.19);
+        height: 100%;
+    }
+
+    section blockquote {
+        text-align: start;
+        padding: 2px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-left: solid 4px black;
+    }
+
+    section blockquote #pushpin {
         font-size: large;
         font-weight: bold;
         color: black;
-
         width: fit-content;
         margin: 0.5em;
-
-        -webkit-user-select: none; /* Safari */
-        -ms-user-select: none; /* IE 10 and IE 11 */
-        user-select: none; /* Standard syntax */
+        user-select: none;
     }
-    section blockquote #callouttext{
+
+    section blockquote #callouttext {
         padding: 4px;
     }
-    section *:hover:not(span):not(:focus){
+
+    .hContainer,
+    .qContainer,
+    .pContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .hContainer {
+        margin: 14px 0 2px;
+    }
+
+    .qContainer {
+        margin: 7px 0;
+    }
+
+    .pContainer {
+        margin: 4px 2px;
+    }
+
+    section h1:hover:not(:focus) {
+        background: rgba(58, 58, 250, 0.1);
+        outline: solid 0.2px rgba(58, 58, 250, 0.3);
+    }
+    section p:hover:not(:focus) {
+        background: rgba(58, 58, 250, 0.1);
+        outline: solid 0.2px rgba(58, 58, 250, 0.3);
+    }
+    section blockquote:hover:not(:focus) {
         background: rgba(58, 58, 250, 0.1);
         outline: solid 0.2px rgba(58, 58, 250, 0.3);
     }
 
-    section *:focus{
+    section *:focus:not(div),
+    section *:active:not(div) {
         background: rgba(58, 58, 250, 0.2);
     }
 
-    section *:active{
-        background: rgba(58, 58, 250, 0.2);
+    .options {
+        visibility: visible;
+        margin: 0 2px;
     }
 
-
-
-
-
+    .options:hover {
+        background: rgba(112, 128, 144, 0.37);
+        width: fit-content;
+        border-radius: 2px;
+    }
 </style>

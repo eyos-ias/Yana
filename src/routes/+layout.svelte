@@ -7,15 +7,7 @@
 </script>
 
 <div class="app">
-<<<<<<< HEAD
-	<h1 class="text-3xl font-bold underline">
-		Hello world!
-	</h1>
-	<h1>Garlic bread with cheese: What the science tells us</h1>
-	<Header />
-=======
 <Navbar/>
->>>>>>> 44e7776542d789f539a270ca496f9723b9b0af5d
 	<main>
 		<slot />
 	</main>

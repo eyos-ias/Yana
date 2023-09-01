@@ -28,11 +28,8 @@
 	"type": "module",
 	"dependencies": {
 		"daisyui": "^3.6.4",
-<<<<<<< HEAD
 		"firebase": "^10.3.1",
-=======
 		"svelte-copy": "^1.4.1",
->>>>>>> 166fc0a0b3098d9babcf9b7459f7a62a1ca72868
 		"uuid": "^9.0.0"
 	}
 }

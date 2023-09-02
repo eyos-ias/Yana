@@ -10,6 +10,8 @@
       console.log(error)
     }
   }
+
+
 </script>
 <div class="navbar bg-base-100">
   <div class="flex-none">
@@ -22,7 +24,7 @@
       <a class="btn btn-ghost normal-case text-xl" href="/" style="text-decoration:none;">YANA</a>
     </div>
     
-      
+
       <div class="dropdown dropdown-end">
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">

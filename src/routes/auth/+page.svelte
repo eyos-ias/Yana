@@ -42,8 +42,7 @@
 
 
         if ($authStore.currentUser){
-            console.log("LOgged in")
-            window.location.href = "/write"
+            window.location.href = "/dashboard"
         }
     }
 </script>

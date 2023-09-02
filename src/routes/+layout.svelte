@@ -20,7 +20,13 @@
                     isLoading:false,
                     currentUser:user
                 }
+
             })
+			if (browser){
+					if (window.location.pathname === "/auth"){
+						window.location.href = "/dashboard"
+					}
+				}
 			} else{
 				if (browser){
 					if (window.location.pathname === "/write"){

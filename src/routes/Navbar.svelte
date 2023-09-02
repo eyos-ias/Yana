@@ -1,3 +1,16 @@
+
+<script>
+  import {authHandlers} from "../stores/authStore"
+
+  const handleLogout = async() =>{
+    try {
+      await authHandlers.logOut()
+      window.location.href = "/auth"
+    } catch (error) {
+      console.log(error)
+    }
+  }
+</script>
 <div class="navbar bg-base-100">
   <div class="flex-none">
     <button class="btn btn-square btn-ghost" >
@@ -24,7 +37,7 @@
             </a>
           </li>
           <li><a>Settings</a></li>
-          <li ><a>Logout</a></li>
+          <li on:click={handleLogout} ><a>Logout</a></li>
         </ul>
       </div>
     </div>

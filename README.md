@@ -1,38 +1,19 @@
-# create-svelte
+# Yana - Ai based note taking and learning platform
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Welcome to the Yana repository  , Yana is a note taking app that stores all your notes on the cloud ,  uses ai to read and understand your notes and create exam preparation questions and quizzes based on that in an organized manner
 
-## Creating a project
+## Structure 
 
-If you're seeing this, you've probably already done this step. Congrats!
+`src/routes` : where most of the front end is written using svelte and sveltekit , to create each page and route for the user based on account and selected course.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+`src/api` : where different backend interactions take place with the apis including the `AI` and the exporting files as pdfs.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+`src/auth` : where the user autentication took place and connection to firebase and the database.
 
-## Developing
+## Purpose
+The purpose of this repository is so that what started from 4 programmers with a passion can transfrom into a learning enviroment that helps thousands succed in their academic and career goals with a global community
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-```bash
-npm run dev
+## How generative ai models are solving the problem
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Generative Ai can help provide a customized learning experience for people of all ages and all stages of life no matter what they are trying to learn, in any langauge more than we would ever do one person at a time , we can tailor a persons education based on their needs , past mistakes and performance , which is equivalent to everyone getting their own personal teacher , which cant be provided from both lack of man power and financial status 

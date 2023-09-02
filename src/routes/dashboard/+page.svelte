@@ -1,9 +1,12 @@
 <script>
     import { db } from '$lib/firebase/firebase.js';
-    import { collection, getDoc, doc, getDocs } from "firebase/firestore";
-    import {onMount} from "svelte";
+    import { collection, getDoc, doc, getDocs, addDoc, setDoc } from "firebase/firestore";
+
 
     let listOfCourses = [];
+
+    let newCourseName = "";
+    let newCourseDescription = "";
 
     async function getCoursesList(){
         //const users_ref = collection(db, 'users');
@@ -25,6 +28,53 @@
     }
 
     getCoursesList();
+
+    async function createCourse(courseName, courseDescription){
+            // try {
+            //     // Reference to the user's document in the "users" collection
+            //     const userDocRef = doc(db, 'users', 'nf.naol9@gmail.com');
+            //
+            //     // Reference to the "courses" subcollection within the user's document
+            //     const coursesCollectionRef = collection(userDocRef, 'courses');
+            //
+            //     // Add a new course document with the provided data
+            //     const newCourseRef = await addDoc(coursesCollectionRef, {name: courseName, description: courseDescription});
+            //
+            //     // Return the ID of the newly created course
+            //     return newCourseRef.id;
+            // } catch (error) {
+            //     console.error('Error creating a new course:', error);
+            //     throw error;
+            // }
+            try {
+                // Reference to the user's document in the "users" collection
+                const userDocRef = doc(db, 'users', 'nf.naol9@gmail.com');
+
+                // Reference to the "courses" subcollection within the user's document
+                const coursesCollectionRef = collection(userDocRef, 'courses');
+
+                // Add a new course document with the provided data
+                const newCourseRef = await addDoc(coursesCollectionRef, {name: courseName, description: courseDescription});
+
+                // Return the ID of the newly created course
+                const courseId = newCourseRef.id;
+
+                // Reference to the "chapters" subcollection within the course document
+                // 💎 const chaptersCollectionRef = collection(newCourseRef, 'chapters');
+
+                // Loop through the chapters and add them to the "chapters" subcollection
+                   //💎 await addDoc(chaptersCollectionRef, {name: "ere wuuu"});
+
+
+                // Return the ID of the newly created course
+                return courseId;
+            } catch (error) {
+                console.error('Error creating a new course with chapters:', error);
+                throw error;
+            }
+        }
+
+
 
 
 </script>
@@ -56,26 +106,37 @@
                         </a>
 
                 {/each}
-                    <button onclick="my_modal_3.showModal()" class="btn">
-                    <div class="card w-96 bg-base-100 shadow-xl ">
+
+                    <div class="card w-96 bg-base-100 shadow-xl " onclick="my_modal_3.showModal()" >
                         <div class="card-body">
                             <img alt="course icon" src="add.png" width="35px">
                             <h2 class="card-title text-lg" >Add Course</h2>
                         </div>
                     </div>
-                </button>
+
+
+
+
             </div>
 
         {/if}
     </div>
+
+
 <!-- You can open the modal using ID.showModal() method -->
 <dialog id="my_modal_3" class="modal">
   <form method="dialog" class="modal-box">
     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-    <p class="py-4">Press ESC key or click on ✕ button to close</p>
-    <input style="margin:70px; margin-bottom:0px; margin-top:30px;" type="text" placeholder="Course Name" class="input input-bordered input-info w-full max-w-xs" />
-    <input style="margin:70px;margin-top:30px; "type="text" placeholder="Couse Descrption" class="input input-bordered input-info w-full max-w-xs" />
-    
+      <p class="py-4">Press ESC key or click on <code>✕</code> button to close</p>
+      <div class="modalForm flex flex-col gap-2">
+          <label for="courseName">Course Name</label>
+          <input type="text" id="courseName" placeholder="Type here" class="input input-bordered w-full" bind:value={newCourseName} />
+          <label for="courseDesc">Course description:</label>
+          <textarea id="courseDesc" class="textarea textarea-bordered w-full" placeholder="Bio" bind:value={newCourseDescription}></textarea>
+      </div>
+      <button class="btn btn-accent  m-3" on:click={()=>{
+          createCourse(newCourseName,newCourseDescription);
+      }}>Add Course</button>
   </form>
 </dialog>
 
@@ -85,11 +146,7 @@
 
 
 <style>
-    .btn{
-        padding: 0px;
-        background: transparent;
-        border: 0px;
-    }
+
     .card{
         margin:20px;
     }
@@ -100,6 +157,8 @@
     a:hover{
         text-decoration: none;
     }
+
+
 
 
 </style>

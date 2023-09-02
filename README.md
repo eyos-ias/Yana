@@ -11,7 +11,7 @@ Welcome to the Yana repository  , Yana is a note taking app that stores all your
 `src/auth` : where the user autentication took place and connection to firebase and the database.
 
 ## Purpose
-The purpose of this repository is so that what started from 4 programmers with a passion can tranfrom into a learning enviroment that helps thousands succed in their academic and career goals with a global community
+The purpose of this repository is so that what started from 4 programmers with a passion can transfrom into a learning enviroment that helps thousands succed in their academic and career goals with a global community
 
 
 ## How generative ai models are solving the problem

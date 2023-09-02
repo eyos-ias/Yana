@@ -4,8 +4,6 @@ Welcome to the Yana repository  , Yana is a note taking app that stores all your
 
 ## Structure 
 
-If you're seeing this, you've probably already done this step. Congrats!
-
 `src/routes` : where most of the front end is written using svelte and sveltekit , to create each page and route for the user based on account and selected course.
 
 `src/api` : where different backend interactions take place with the apis including the `AI` and the exporting files as pdfs.

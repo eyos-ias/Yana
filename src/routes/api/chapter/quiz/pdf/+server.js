@@ -1,4 +1,4 @@
-import generatePdf from '../../../../../lib/server/pdf/generateChapterPdf';
+import generatePdf from '$lib/server/pdf/generateChapterPdf';
 
 export const GET = async ()=>{
 

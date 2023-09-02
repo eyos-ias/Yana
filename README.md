@@ -10,15 +10,9 @@ Welcome to the Yana repository  , Yana is a note taking app that stores all your
 
 `src/auth` : where the user autentication took place and connection to firebase and the database.
 
-## Developing
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Purpose
+The purpose of this repository is so that what started from 4 programmers with a passion can tranfrom into a learning enviroment that helps thousands succed in their academic and career goals with a global community
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
 
 ## Building
 

@@ -16,4 +16,4 @@ The purpose of this repository is so that what started from 4 programmers with a
 
 ## How generative ai models are solving the problem
 
-Generative Ai can help provide a customized learning experience for people of all ages and all stages of life no matter what they are trying to learn more than we would ever do one person at a time , we can tailor a persons education based on their needs , past mistakes and performance , which is equivalent to everyone getting their own personal teacher , which cant be provided from both lack of man power and financial status 
+Generative Ai can help provide a customized learning experience for people of all ages and all stages of life no matter what they are trying to learn, in any langauge more than we would ever do one person at a time , we can tailor a persons education based on their needs , past mistakes and performance , which is equivalent to everyone getting their own personal teacher , which cant be provided from both lack of man power and financial status 

@@ -29,7 +29,7 @@
 
 </script>
 <div class="alert alert-info">
-    <span>Welcome back brook</span>
+    <span>Welcome back <strong><u>Brook</u></strong></span>
   </div>
 <section>
     <div class="mygrid">
@@ -74,6 +74,8 @@
 
     </div>
 </section>
+
+
 
 
 <style>

@@ -34,9 +34,8 @@
 
 </script>
 <section>
-    chapters page
     {#if (listOfChapters.length <= 0)}
-        Loading...
+    <span class="loading loading-dots loading-lg"></span>
     {:else}
         {listOfChapters}
     {/if}

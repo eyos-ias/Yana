@@ -7,8 +7,8 @@
 		<!-- Sidebar content here -->
 		<h1 style="font-size: 30px; margin-bottom:30px">Welcome to Yana!</h1>
 		<div class="divider">#</div>
-		<li><a href="./">Home</a></li>
-		<li><a href="./dashboard">Dashboard</a></li>
+		<li><a href="/">Home</a></li>
+		<li><a href="/dashboard">Dashboard</a></li>
 		<li><a>login</a></li>
 		
 		

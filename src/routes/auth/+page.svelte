@@ -1,11 +1,13 @@
 <script>
     import {authHandlers, authStore} from "../../stores/authStore"
-    import {onMount} from "svelte"
+    import {onMount, } from "svelte"
     import {auth} from "../../lib/firebase/firebase"
 
+
+
     onMount(() =>{
+
         const unsubscribe = auth.onAuthStateChanged(user =>{
-            console.log(user)
             authStore.update( curr =>{
                 return {
                     ...curr,
@@ -27,7 +29,6 @@
     }
 
     const handleSubmit = async() =>{
-        console.log("hell ya")
         if (!email || !password || (register && !confirmPassword)){
             error = "Please fill all fields correctly"
             return 
@@ -48,7 +49,10 @@
             }
         }
 
+
+
         if ($authStore.currentUser){
+            console.log("LOgged in")
             window.location.href = "/write"
         }
     }

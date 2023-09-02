@@ -33,10 +33,12 @@
     <span class="loading loading-spinner loading-lg"></span>
     {:else}
     {#each listOfCourses as course}
-    <button class="btn"><a href="./course/{course}">    <div class="card w-96 bg-base-100 shadow-xl ">
+    <button class="btn">
+        <a href="./course/{course}">   
+         <div class="card w-96 bg-base-100 shadow-xl ">
         <div class="card-body">
             {#if course[1] == 's' || course[1] == 'S'}
-            <div class="badge badge-primary">Main couse</div>
+            <div class="badge badge-primary">Main course</div>
             {:else if course[1] == 'c' || course[1] == 'C'}
             <div class="badge badge-accent">Common Course</div>
             
@@ -70,6 +72,5 @@
     }
     a{
         text-decoration: none;
-        text-align: center;
     }
 </style>

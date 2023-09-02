@@ -56,13 +56,14 @@
                         </a>
 
                 {/each}
-
+                    <button onclick="my_modal_3.showModal()" class="btn">
                     <div class="card w-96 bg-base-100 shadow-xl ">
                         <div class="card-body">
                             <img alt="course icon" src="add.png" width="35px">
                             <h2 class="card-title text-lg" >Add Course</h2>
                         </div>
                     </div>
+                </button>
 
 
 
@@ -70,7 +71,16 @@
 
         {/if}
     </div>
-
+<!-- You can open the modal using ID.showModal() method -->
+<dialog id="my_modal_3" class="modal">
+  <form method="dialog" class="modal-box">
+    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    <p class="py-4">Press ESC key or click on ✕ button to close</p>
+    <input style="margin:70px; margin-bottom:0px; margin-top:30px;" type="text" placeholder="Course Name" class="input input-bordered input-info w-full max-w-xs" />
+    <input style="margin:70px;margin-top:30px; "type="text" placeholder="Couse Descrption" class="input input-bordered input-info w-full max-w-xs" />
+    
+  </form>
+</dialog>
 
 </section>
 

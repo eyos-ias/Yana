@@ -7,8 +7,11 @@ Welcome to the Yana repository  , Yana is a note taking app that stores all your
 If you're seeing this, you've probably already done this step. Congrats!
 
 `src/routes` : where most of the front end is written using svelte and sveltekit , to create each page and route for the user based on account and selected course 
-## Developing
 
+`src/api` : where different backend interactions take place with the apis including the `AI` and the exporting files as pdfs
+`src/auth` : where the user autentication took place and connection to firebase and the database
+
+## Developing
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
 ```bash

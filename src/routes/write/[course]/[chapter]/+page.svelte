@@ -2,9 +2,9 @@
     import { v4 as uuid } from "uuid"
     import {afterUpdate} from 'svelte';
     //import {onMount} from "svelte"
-    //import {authStore} from "../../../../stores/authStore.js"
+    import {authStore} from "../../../../stores/authStore.js"
     import { page } from '$app/stores'
-    import {collection, doc, getDoc} from "firebase/firestore";
+    import {collection, doc, getDoc, updateDoc} from "firebase/firestore";
     import {db} from "$lib/firebase/firebase.js";
 
     let focusElementId;
@@ -17,10 +17,7 @@
         }
     });
 
-
     let showOptions = null;
-
-
 
     async function getNote(){
 
@@ -29,7 +26,8 @@
         console.log(courseName, chapterName);
         try {
             // Reference to the user's document in the "users" collection
-            const userDocRef = doc(db, 'users', 'nf.naol9@gmail.com');
+            const email = localStorage.getItem('email');
+            const userDocRef = doc(db, 'users', email);
             // Reference to the "courses" subcollection within the user's document
             const coursesCollectionRef = collection(userDocRef, 'courses');
             // Reference to the specific course document within the "courses" subcollection
@@ -41,8 +39,10 @@
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 const data = docSnap.data();
-                blocks = data.blocks;
-                console.log(blocks)
+                if(data.blocks.length <= 0)
+                    blocks = [{id: uuid(), html: "Start writing", tag:'p'}]
+                else
+                    blocks = data.blocks;
             }
 
 
@@ -53,17 +53,32 @@
     }
     getNote();
 
+    async function saveNote(){
+        let courseName = $page.params.course;
+        let chapterName = $page.params.chapter;
+        try {
+            // Reference to the user's document in the "users" collection
+            const email = localStorage.getItem('email');
+            const userDocRef = doc(db, 'users', email);
+            // Reference to the "courses" subcollection within the user's document
+            const coursesCollectionRef = collection(userDocRef, 'courses');
+            // Reference to the specific course document within the "courses" subcollection
+            const courseDocRef = doc(coursesCollectionRef, courseName);
+            // Reference to the "chapters" subcollection within the course document
+            const chaptersCollectionRef = collection(courseDocRef, 'chapters');
+            // Fetching document with chapter name
+            const docRef = doc(chaptersCollectionRef, chapterName);
+            await updateDoc(docRef, { blocks });
+        } catch (error) {
+            console.error('Error fetching sub-collection documents:', error);
+            throw error;
+        }
+    }
 
 
     let blocks = [
-        { id: 654684, html: "this is the", tag: "h1" },
-        { id: 5674567, html: "this is the beauty of it all his is the bea uty of it all his is the be auty of i t all", tag: "p" },
-        { id: 2432435, html: "beauty of it all", tag: "h1" },
-        { id: 98765, html: "beauty of it all Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, sunt! Lorem ipsum dolor sit amet, " +
-                "consectetur adipisicing elit. Adipisci alias aliquid architecto, dolore fugit impedit maxime nam quasi veniam voluptas?", tag: "q" },
-        { id: 565467876, html: "this is the beauty of it all his is the beauty of it al lh is is the beauty of it all his is the beauty of it all", tag: "p" },
-        { id: 9567547, html: "this is the beauty of it all his is the beauty of it al lh is is the beauty of it all his is the beauty of it all", tag: "q" },
-    ];
+        { id: 654684, html: "Loading notes...", tag: "h1" },
+          ];
 
     function handleKeydown(e, idx){
         if(e.key === "Backspace" && blocks[idx].html.length === 0){
@@ -178,15 +193,23 @@
     <div>
     </div>
 </section>
-<button on:click={()=>{console.log(blocks)}}>All</button>
+
+<button class="btn btn-primary btn-wide my-2"
+        on:click={()=>{
+            console.log(blocks)
+            saveNote();
+            getNote();
+        }}
+
+>Save</button>
 
 
 <style>
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
+    /** {*/
+    /*    padding: 0;*/
+    /*    margin: 0;*/
+    /*    box-sizing: border-box;*/
+    /*}*/
 
     section {
         display: flex;

@@ -1,6 +1,8 @@
 <script>
     import { db } from '$lib/firebase/firebase.js';
     import { collection, getDoc, doc, getDocs, addDoc, setDoc } from "firebase/firestore";
+    import {authStore} from "../../stores/authStore.js"
+    import {onMount} from "svelte";
 
 
     let listOfCourses = [];
@@ -8,11 +10,16 @@
     let newCourseName = "";
     let newCourseDescription = "";
 
+    let dataLoading = true;
+
     async function getCoursesList(){
         //const users_ref = collection(db, 'users');
         try {
         // Get a reference to the sub-collection
-        const users_ref = collection(db, 'users','nf.naol9@gmail.com', 'courses');
+
+        const email = localStorage.getItem('email');
+
+        const users_ref = collection(db, 'users',email, 'courses');
         // Fetch all documents in the sub-collection
         const querySnapshot = await getDocs(users_ref);
         // Extract the data from each document
@@ -20,6 +27,8 @@
          listOfCourses =querySnapshot.docs.map((doc) => {
             return doc.data();
         });
+         console.log("sdlfkgjsdflgkj",listOfCourses)
+        dataLoading = false;
 
     } catch (error) {
         console.error('Error fetching sub-collection documents:', error);
@@ -27,47 +36,26 @@
     }
     }
 
-    getCoursesList();
+
+    onMount(()=>{
+        getCoursesList();
+    })
+
+
 
     async function createCourse(courseName, courseDescription){
-            // try {
-            //     // Reference to the user's document in the "users" collection
-            //     const userDocRef = doc(db, 'users', 'nf.naol9@gmail.com');
-            //
-            //     // Reference to the "courses" subcollection within the user's document
-            //     const coursesCollectionRef = collection(userDocRef, 'courses');
-            //
-            //     // Add a new course document with the provided data
-            //     const newCourseRef = await addDoc(coursesCollectionRef, {name: courseName, description: courseDescription});
-            //
-            //     // Return the ID of the newly created course
-            //     return newCourseRef.id;
-            // } catch (error) {
-            //     console.error('Error creating a new course:', error);
-            //     throw error;
-            // }
             try {
                 // Reference to the user's document in the "users" collection
-                const userDocRef = doc(db, 'users', 'nf.naol9@gmail.com');
-
+                const email = localStorage.getItem('email');
+                const userDocRef = doc(db, 'users', email);
                 // Reference to the "courses" subcollection within the user's document
                 const coursesCollectionRef = collection(userDocRef, 'courses');
 
                 // Add a new course document with the provided data
-                const newCourseRef = await addDoc(coursesCollectionRef, {name: courseName, description: courseDescription});
-
-                // Return the ID of the newly created course
-                const courseId = newCourseRef.id;
-
-                // Reference to the "chapters" subcollection within the course document
-                // 💎 const chaptersCollectionRef = collection(newCourseRef, 'chapters');
-
-                // Loop through the chapters and add them to the "chapters" subcollection
-                   //💎 await addDoc(chaptersCollectionRef, {name: "ere wuuu"});
-
-
-                // Return the ID of the newly created course
-                return courseId;
+                //const newCourseRef = await addDoc(coursesCollectionRef, );
+                const courseDocRef = doc(coursesCollectionRef, courseName);
+                await setDoc(courseDocRef, {name: courseName, description: courseDescription});
+                getCoursesList()
             } catch (error) {
                 console.error('Error creating a new course with chapters:', error);
                 throw error;
@@ -84,7 +72,7 @@
         <span>Welcome back <strong><u>Brook</u></strong></span>
     </div>
     <div class="flex flex-col min-h-fit">
-        {#if (listOfCourses.length <= 0)}
+        {#if (listOfCourses.length <= 0 && dataLoading)}
             <span class="loading loading-spinner loading-lg"></span>
         {:else}
             <div class="container flex flex-col">

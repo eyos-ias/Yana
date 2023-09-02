@@ -16,9 +16,11 @@ export const authStore = writable({
 export const authHandlers = {
 	signUp: async (email, password) => {
 		await createUserWithEmailAndPassword(auth, email, password);
+		localStorage.setItem('email', email);
 	},
 	login: async (email, password) => {
 		await signInWithEmailAndPassword(auth, email, password);
+		localStorage.setItem('email', email);
 	},
 	logOut: async () => {
 		await signOut(auth);

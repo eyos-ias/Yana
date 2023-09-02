@@ -3,6 +3,7 @@
     import {db} from "$lib/firebase/firebase.js";
     import { page } from '$app/stores'
     import {authStore} from "../../../stores/authStore.js";
+    import {onMount} from "svelte";
 
     let listOfChapters = []
     let courseName = $page.params.name
@@ -33,7 +34,10 @@
             throw error;
         }
     }
-    getChaptersList();
+
+    onMount(()=>{
+        getChaptersList();
+    })
 
     async function createChapter(chapterName){
 

@@ -69,7 +69,7 @@
 
 <section class="flex flex-col">
     <div class="alert alert-info">
-        <span>Welcome back <strong><u>Brook</u></strong></span>
+        <span>Welcome back</span>
     </div>
     <div class="flex flex-col min-h-fit">
         {#if (listOfCourses.length <= 0 && dataLoading)}

@@ -2,10 +2,10 @@
     import { v4 as uuid } from "uuid"
     import {afterUpdate} from 'svelte';
     //import {onMount} from "svelte"
-    import {authStore} from "../../../../stores/authStore.js"
     import { page } from '$app/stores'
     import {collection, doc, getDoc, updateDoc} from "firebase/firestore";
     import {db} from "$lib/firebase/firebase.js";
+    import generateQuestions from "../../../api/AI.js";
 
     let focusElementId;
     let autoFocus = false;
@@ -18,12 +18,20 @@
     });
 
     let showOptions = null;
+    let buttonText = "Generate Quiz"
+
+    let blocks = [
+        { id: 654684, html: "Loading notes...", tag: "h1" },
+    ];
+    $:{
+        if(blocks.length <= 0)
+            blocks = [{id: uuid(), html: "Start writing", tag:'p'}]
+    }
 
     async function getNote(){
 
         let courseName = $page.params.course;
         let chapterName = $page.params.chapter;
-        console.log(courseName, chapterName);
         try {
             // Reference to the user's document in the "users" collection
             const email = localStorage.getItem('email');
@@ -44,8 +52,6 @@
                 else
                     blocks = data.blocks;
             }
-
-
         } catch (error) {
             console.error('Error fetching sub-collection documents:', error);
             throw error;
@@ -76,9 +82,7 @@
     }
 
 
-    let blocks = [
-        { id: 654684, html: "Loading notes...", tag: "h1" },
-          ];
+
 
     function handleKeydown(e, idx){
         if(e.key === "Backspace" && blocks[idx].html.length === 0){
@@ -196,12 +200,25 @@
 
 <button class="btn btn-primary btn-wide my-2"
         on:click={()=>{
-            console.log(blocks)
             saveNote();
             getNote();
         }}
 
 >Save</button>
+
+<button class="btn btn-primary btn-wide my-2"
+        on:click={async ()=>{
+            buttonText = "Loading..."
+            let notes = blocks.map(ele=> {
+                if(ele.tag === 'p')
+                    return ele.html
+            })
+            let questionSet1 = await generateQuestions(notes);
+            console.log(questionSet1.candidates[0].output);
+            buttonText = "Generate Quiz";
+        }}
+
+>{buttonText}</button>
 
 
 <style>

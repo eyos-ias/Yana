@@ -7,18 +7,6 @@
 
 
 
-    onMount(() =>{
-
-        const unsubscribe = auth.onAuthStateChanged(user =>{
-            authStore.update( curr =>{
-                return {
-                    ...curr,
-                    isLoading:false,
-                    currentUser:user
-                }
-            })
-        })
-    })
     let register = true
     let email = ''
     let password = ''

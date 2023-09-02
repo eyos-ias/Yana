@@ -2,7 +2,7 @@
 
 Welcome to the Yana repository  , Yana is a note taking app that stores all your notes on the cloud ,  uses ai to read and understand your notes and create exam preparation questions and quizzes based on that in an organized manner
 
-## Creating a project
+## Structure 
 
 If you're seeing this, you've probably already done this step. Congrats!
 

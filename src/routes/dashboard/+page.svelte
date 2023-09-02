@@ -10,11 +10,9 @@
         try {
         // Get a reference to the sub-collection
         const users_ref = collection(db, 'users','nf.naol9@gmail.com', 'courses');
-        //const users_ref = collection(db, materialType, level, course);
         // Fetch all documents in the sub-collection
         const querySnapshot = await getDocs(users_ref);
         // Extract the data from each document
-
 
          listOfCourses = querySnapshot.docs.map((doc) => {
             return doc.data().name;
@@ -26,16 +24,7 @@
     }
     }
 
-
-
-
-    console.log("Then me")
-    onMount(()=>{
-        getCoursesList();
-        console.log("Me too runs")
-    })
-
-
+    getCoursesList();
 
 
 </script>

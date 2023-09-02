@@ -1,11 +1,11 @@
 <script>
     import { v4 as uuid } from "uuid"
-    import {afterUpdate} from 'svelte';
+    import {afterUpdate, onMount} from 'svelte';
     //import {onMount} from "svelte"
     import { page } from '$app/stores'
     import {collection, doc, getDoc, updateDoc} from "firebase/firestore";
     import {db} from "$lib/firebase/firebase.js";
-    import generateQuestions from "../../../api/AI.js";
+    import {generateQuestions, summarizeNotes} from "../../../api/AI.js";
 
     let focusElementId;
     let autoFocus = false;
@@ -19,6 +19,7 @@
 
     let showOptions = null;
     let buttonText = "Generate Quiz"
+    let summarizeButtonText = "Summarize"
 
     let blocks = [
         { id: 654684, html: "Loading notes...", tag: "h1" },
@@ -57,7 +58,11 @@
             throw error;
         }
     }
-    getNote();
+
+    onMount(()=>{
+        getNote();
+    })
+
 
     async function saveNote(){
         let courseName = $page.params.course;
@@ -198,16 +203,19 @@
     </div>
 </section>
 
-<button class="btn btn-primary btn-wide my-2"
-        on:click={()=>{
+
+<div class="flex flex-row my-2 w-fit">
+
+    <button class="btn btn-primary"
+            on:click={()=>{
             saveNote();
             getNote();
         }}
 
->Save</button>
+    >Save</button>
 
-<button class="btn btn-primary btn-wide my-2"
-        on:click={async ()=>{
+    <button class="btn btn-accent mx-2"
+            on:click={async ()=>{
             buttonText = "Loading..."
             let notes = blocks.map(ele=> {
                 if(ele.tag === 'p')
@@ -218,8 +226,23 @@
             buttonText = "Generate Quiz";
         }}
 
->{buttonText}</button>
+    >{buttonText}</button>
 
+    <button class="btn btn-neutral"
+            on:click={async ()=>{
+            summarizeButtonText = "Loading..."
+            let notes = blocks.map(ele=> {
+                if(ele.tag === 'p')
+                    return ele.html
+            })
+            let questionSet1 = await summarizeNotes(notes);
+            blocks = [...blocks, {id: uuid(), tag: 'h1', html: 'Summary'}, {id: uuid(), tag: 'p', html: questionSet1.candidates[0].output}]
+            summarizeButtonText = "Summarize";
+        }}
+    >{summarizeButtonText}</button>
+
+
+</div>
 
 <style>
     /** {*/

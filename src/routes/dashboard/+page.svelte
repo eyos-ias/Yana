@@ -30,10 +30,46 @@
 </script>
 <section>
     {#if (listOfCourses.length <= 0)}
-        Loading...
+    <span class="loading loading-spinner loading-lg"></span>
     {:else}
-        {listOfCourses}
+    {#each listOfCourses as course}
+    <button class="btn"><a href="./course/{course}">    <div class="card w-96 bg-base-100 shadow-xl ">
+        <div class="card-body">
+            {#if course[1] == 's' || course[1] == 'S'}
+            <div class="badge badge-primary">Main couse</div>
+            {:else if course[1] == 'c' || course[1] == 'C'}
+            <div class="badge badge-accent">Common Course</div>
+            
+            {/if}
+
+          <h2 class="card-title"><img alt="course icon" src="open-book.png" width="40px">{course}</h2>
+          <p >course descripton</p>
+        </div>
+      </div>
+    </a>
+    </button>
+    {/each}
+        
     {/if}
 
 
 </section>
+
+<style>
+    .btn{
+        padding: 0px;
+        background: transparent;
+        border: 0px;
+    }
+    .card{
+        margin:20px;
+    }
+    .card:hover{
+        background-color: #f2f2f29f;
+        transition: 0.2s;
+    }
+    a{
+        text-decoration: none;
+        text-align: center;
+    }
+</style>

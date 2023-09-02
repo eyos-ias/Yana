@@ -15,7 +15,7 @@
         // Extract the data from each document
 
          listOfCourses = querySnapshot.docs.map((doc) => {
-            return doc.data().name;
+            return doc.data();
         });
 
     } catch (error) {
@@ -28,27 +28,28 @@
 
 
 </script>
-<section>
+<section >
     {#if (listOfCourses.length <= 0)}
     <span class="loading loading-spinner loading-lg"></span>
     {:else}
-    {#each listOfCourses as course}
-    <button class="btn"><a href="./course/{course}">    <div class="card w-96 bg-base-100 shadow-xl ">
-        <div class="card-body">
-            {#if course[1] == 's' || course[1] == 'S'}
-            <div class="badge badge-primary">Main couse</div>
-            {:else if course[1] == 'c' || course[1] == 'C'}
-            <div class="badge badge-accent">Common Course</div>
-            
-            {/if}
-
-          <h2 class="card-title"><img alt="course icon" src="open-book.png" width="40px">{course}</h2>
-          <p >course descripton</p>
+        <div class="container flex flex-col lg:flex-row md:flex-col">
+            {#each listOfCourses as course}
+                <button class="btn m-20"><a href="./course/{course.name}">    <div class="card w-96 bg-base-100 shadow-xl hover:no-underline">
+                    <div class="card-body">
+                        {#if course.name.startsWith('CS')}
+                            <div class="badge badge-primary">Main couse</div>
+                        {:else if course.name.startsWith('CC')}
+                            <div class="badge badge-accent">Common Course</div>
+                        {/if}
+                        <h2 class="card-title"><img alt="course icon" src="open-book.png" width="40px">{course.name}</h2>
+                        <p >{course.description}</p>
+                    </div>
+                </div>
+                </a>
+                </button>
+            {/each}
         </div>
-      </div>
-    </a>
-    </button>
-    {/each}
+
         
     {/if}
 
@@ -56,19 +57,18 @@
 </section>
 
 <style>
+
     .btn{
         padding: 0px;
         background: transparent;
         border: 0px;
     }
-    .card{
-        margin:20px;
-    }
+
     .card:hover{
-        background-color: #f2f2f29f;
+        background-color: rgba(242, 242, 242, 0.68);
         transition: 0.2s;
     }
-    a{
+    a:hover{
         text-decoration: none;
         text-align: center;
     }

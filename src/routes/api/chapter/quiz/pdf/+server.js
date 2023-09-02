@@ -1,9 +1,6 @@
 import generatePdf from '$lib/server/pdf/generateChapterPdf';
 
 export const GET = async ()=>{
-
-    
-
     const pdf = await generatePdf();
     // setHeaders({
     //     'Content-Type': 'application/pdf',

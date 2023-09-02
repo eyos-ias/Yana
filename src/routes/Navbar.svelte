@@ -19,7 +19,7 @@
   </label> </button>
   </div>
     <div class="flex-1">
-      <a class="btn btn-ghost normal-case text-xl" href="./" style="text-decoration:none;">YANA</a>
+      <a class="btn btn-ghost normal-case text-xl" href="/" style="text-decoration:none;">YANA</a>
     </div>
     
       

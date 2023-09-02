@@ -14,7 +14,7 @@
         const querySnapshot = await getDocs(users_ref);
         // Extract the data from each document
 
-         listOfCourses = querySnapshot.docs.map((doc) => {
+         listOfCourses =querySnapshot.docs.map((doc) => {
             return doc.data().name;
         });
 
@@ -28,7 +28,11 @@
 
 
 </script>
+<div class="alert alert-info">
+    <span>Welcome back brook</span>
+  </div>
 <section>
+    <div class="mygrid">
     {#if (listOfCourses.length <= 0)}
     <span class="loading loading-spinner loading-lg"></span>
     {:else}
@@ -50,12 +54,27 @@
       </div>
     </a>
     </button>
+
     {/each}
+    
+        <button class="btn gird-elem">
+            <a href="https://www.guthib.com">   
+             <div class="card w-50 bg-base-100 shadow-xl" style="text-align: center;" >
+            <div class="card-body" style="text-align: center;">
+                <img alt="course icon" src="add.png" width="35px" style="display: block; margin-left: auto; margin-right: auto;width: 50%;">
+              <h2 class="card-title" style="font-size: 15px;">Add Course</h2>
+            </div>
+          </div>
+        </a>
+        </button>
+
+
         
     {/if}
 
-
+    </div>
 </section>
+
 
 <style>
     .btn{
@@ -73,4 +92,10 @@
     a{
         text-decoration: none;
     }
+    .mygrid{
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        row-gap: 100px;
+    }
+
 </style>

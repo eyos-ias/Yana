@@ -1,22 +1,12 @@
 <script>
     import {authHandlers, authStore} from "../../stores/authStore"
+
+   
     import {onMount, } from "svelte"
     import {auth} from "../../lib/firebase/firebase"
 
 
 
-    onMount(() =>{
-
-        const unsubscribe = auth.onAuthStateChanged(user =>{
-            authStore.update( curr =>{
-                return {
-                    ...curr,
-                    isLoading:false,
-                    currentUser:user
-                }
-            })
-        })
-    })
     let register = true
     let email = ''
     let password = ''

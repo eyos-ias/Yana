@@ -1,7 +1,8 @@
 <script>
     import { v4 as uuid } from "uuid"
     import {afterUpdate} from 'svelte';
-
+    import {onMount} from "svelte"
+    import {authStore} from "../../stores/authStore"
     let focusElementId;
     let autoFocus = false;
     afterUpdate(() => {
@@ -11,6 +12,7 @@
             autoFocus = false;
         }
     });
+
 
     let showOptions = null;
 

@@ -1,10 +1,37 @@
 <script>
+	import {authStore} from "../stores/authStore"
+    import {onMount} from "svelte"
+    import {auth} from "../lib/firebase/firebase";
+	 import { browser } from "$app/environment"
+
 	import '../app.postcss';
 	import './Navbar.svelte'
 	import Navbar from './Navbar.svelte';
 	import './styles.css';
 	import "../app.css";
 	import Sidebar from './Sidebar.svelte';
+
+	onMount(async () =>{
+        const unsubscribe =  auth.onAuthStateChanged(user =>{
+			if (user){
+				authStore.update( curr =>{
+                return {
+                    ...curr,
+                    isLoading:false,
+                    currentUser:user
+                }
+            })
+			} else{
+				if (browser){
+					if (window.location.pathname === "/write"){
+						window.location.href = "/auth"
+					}
+				}
+			}
+           
+        })
+		return unsubscribe
+    })
 	let showmenu = false;
 	let pos = { x: 0, y: 0 };
 	function rightclicked (e){
@@ -14,6 +41,8 @@
     function onPageClick(e){
 		showmenu=false;
 	}
+
+	console.log($authStore.currentUser)
 </script>
 
 <div class="app">

@@ -16,13 +16,13 @@
 <svelte:head>
 	<title>Home</title>
 	<meta name="description" content="Svelte demo app" />
-
 </svelte:head>
 
 <section>
-	
-<h1 >hello
-</h1>
+
+	<a href="/auth" class="btn btn-primary btn-wide btn-lg hover:decoration-0">
+		Get Started
+	</a>
 
 </section>
 

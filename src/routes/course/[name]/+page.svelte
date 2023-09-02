@@ -46,6 +46,7 @@
         <a href="../write/{courseName}/{chapter}">
             <div class="card w-96 bg-base-100 shadow-xl ">
                 <div class="card-body" >
+                    <div class="card-grid">
                      <!-- if chapter.status="Completed" -->
                         <div class="badge badge-success gap-2">
                          Completed
@@ -59,6 +60,14 @@
                         Not started
                     </div>
                     {/if}   -->
+                    <div class="dropdown dropdown-bottom ">
+                        <label tabindex="0" class="btn m-1 options">...</label>
+                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                          <li><a>Quiz</a></li>
+                          <li><a>Delete</a></li>
+                        </ul>
+                      </div>
+                </div>
                     <h2 class="card-title"><img alt="chapter icon" src="/bookmark.png" width="40px">{chapter}</h2>
                     <p >{chapter}</p>
                 </div>
@@ -87,6 +96,10 @@
     </form>
   </dialog>
 <style>
+    .card-grid{
+        display: grid;
+        grid-template-columns: auto auto;
+    }
     .mygrid
     {
         display: grid;
@@ -105,5 +118,21 @@
         padding: 0px;
         background: transparent;
         border: 0px;
+    }
+    .btn:hover
+    {
+        background-color: aliceblue;
+    }
+    .options{
+    font-size: 30px;
+    position: relative;
+    left: 120px;
+    margin: 0;
+    padding: 0;
+    bottom: 30px;
+    }
+    .options:hover
+    {
+        background-color: aliceblue;
     }
 </style>

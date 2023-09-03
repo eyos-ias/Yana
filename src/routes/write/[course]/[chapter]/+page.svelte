@@ -118,10 +118,10 @@
 		questions.forEach((q, index) => {
 			docDefintion.content.push(
 				{ text: `Question ${index + 1}: ${q.question}`, bold: true },
-				{
-					ul: q.options.map((opt, optIndex) => {
+				{   type: 'lower-alpha',
+					ol: q.options.map((opt, optIndex) => {
 						return {
-							text: `${String.fromCharCode(65 + optIndex)}. ${opt}`,
+							text: `${opt}`,
 							margin: [20, 0, 0, 0]
 						};
 					})
@@ -143,7 +143,7 @@
         }),
       }
     );
-		pdfMake.createPdf(docDefintion).open();
+		pdfMake.createPdf(docDefintion).download("quiz");
 	}
 </script>
 

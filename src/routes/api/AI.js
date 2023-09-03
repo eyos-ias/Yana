@@ -27,7 +27,7 @@ async function generateQuestions(notes) {
     body: JSON.stringify({
       'prompt': {
         'text': notes +
-            'Generate 5 multiple choice questions on the above text in json format`'
+            'Generate 5 multiple choice questions on the above text in json format.`'
       },
       'temperature': 1,
       'candidateCount': 2

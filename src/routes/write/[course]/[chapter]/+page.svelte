@@ -9,6 +9,7 @@
 	//import {printChapterPdf} from '../../../../lib/server/pdf/generateChapterPdf.js';
 	import pdfMake from 'pdfmake/build/pdfmake';
 	import pdfFonts from 'pdfmake/build/vfs_fonts';
+	import {goto} from "$app/navigation";
 
 	let focusElementId;
 	let autoFocus = false;
@@ -19,6 +20,7 @@
 			autoFocus = false;
 		}
 	});
+	let dataWithoutBackticks;
 
 	let showOptions = null;
 	let buttonText = 'Generate Quiz';
@@ -301,9 +303,10 @@
 			let questionSet1 = await generateQuestions(notes);
 			
 			//console.log(typeof questionSet1.candidates[0].output);
-            const dataWithoutBackticks = questionSet1.candidates[0].output.replace(/^```json|```$/g, '');			//console.log(JSON.parse(dataWithoutBackticks));
+            dataWithoutBackticks = questionSet1.candidates[0].output.replace(/^```json|```$/g, '');
+			//console.log(JSON.parse(dataWithoutBackticks));
 			buttonText = 'Generate Quiz';
-			printPdf(JSON.parse(dataWithoutBackticks));
+			window.my_modal_3.showModal();
 			//printPdf(questionSet1.candidates[0]);
 		}}>{buttonText}</button
 	>
@@ -345,6 +348,27 @@
 	}}>{Asktext}</button>
   </div>
 
+<button class="btn" onclick="my_modal_3.showModal()">open modal</button>
+<dialog id="my_modal_3" class="modal">
+	<form method="dialog" class="modal-box">
+		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+		<h3 class="font-bold text-2xl">🎆</h3>
+		<h2 class="py-4 text-xl">Your Quiz Is Ready!</h2>
+		<div class="flex justify-end">
+			<button class="btn btn-primary btn-sm"
+				on:click={()=>{
+					localStorage.setItem("quizData", dataWithoutBackticks);
+					goto("/quizstage");
+				}
+				}
+			>Try Now</button>
+			<button class="btn btn-neutral btn-sm mx-3" on:click={()=>{
+				printPdf(JSON.parse(dataWithoutBackticks));
+			}}>Download PDF</button>
+		</div>
+	</form>
+</dialog>
+
 <style>
 	/** {*/
 	/*    padding: 0;*/
@@ -358,10 +382,11 @@
 		/*justify-content: center;*/
 		align-items: center;
 		flex: 0.6;
-		padding: 20px 10px;
-		border: solid red 2px;
+		padding: 20px 15px 20px 5px;
+		border: solid black 2px;
+		box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 		max-width: 600px;
-		min-width: 400px;
+		min-width: 500px;
 		background: white;
 	}
 

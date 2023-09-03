@@ -145,13 +145,33 @@
     );
 		pdfMake.createPdf(docDefintion).download("quiz");
 	}
+
+
+	//valid save message
+	let displaysaved =false
+        function validmassage()
+        {
+			console.log("open here")
+            function deletemessage(){
+                displaysaved =false;
+            }
+
+            displaysaved =true;
+            setTimeout(deletemessage,2000)
+        }
 </script>
 
 <svelte:head>
 	<title>Write</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
+{#if displaysaved}
 
+<div class="alert alert-success">
+	<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+	<span>Your notes have been saved!</span>
+  </div>
+{/if}
 <section class="max-w-prose lg:text-lg prose prose-slate mx-auto mt-8 lg:prose-lg">
 	<h2>
 		<strong>Write your note</strong>
@@ -258,7 +278,9 @@
 		</div>
 	{/each}
 	<div />
+
 </section>
+
 
 <div class="flex flex-row my-2 w-fit">
 	<button
@@ -266,8 +288,8 @@
 		on:click={() => {
 			saveNote();
 			getNote();
-		}}>Save</button
-	>
+			validmassage();
+		}}>Save</button>
 
 	<button
 		class="btn btn-accent mx-2"
@@ -475,4 +497,9 @@
 		background: slategray;
 		color: whitesmoke;
 	}
+	.alert
+	{ 
+	position: sticky;
+	 z-index:10;
+	 }
 </style>

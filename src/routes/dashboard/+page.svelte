@@ -77,7 +77,6 @@
         {:else}
             <div class="container flex flex-col">
                 {#each listOfCourses as course}
-
                         <a href="./course/{course.name}">
                             <div class="card w-96 bg-base-100 shadow-xl ">
                                 <div class="card-body">
@@ -86,13 +85,11 @@
                                     {:else if course.name.startsWith("CC")}
                                         <div class="badge badge-accent">Common Course</div>
                                     {/if}
-
                                     <h2 class="card-title"><img alt="course icon" src="open-book.png" width="40px">{course.name}</h2>
-                                    <p >{course.description}n</p>
+                                    <p >{course.description}</p>
                                 </div>
                             </div>
                         </a>
-
                 {/each}
 
                     <div class="card w-96 bg-base-100 shadow-xl " onclick="my_modal_3.showModal()" >

@@ -17,14 +17,7 @@ async function shortAnswerQuestions(notes) {
     return shortAnswers.candidates[0].output;
 }
 
-async function generateQuestions(notes, specs) {
-
-    let prompt = "Generate 5 multiple choice questions on the above.";
-    if(specs.includeExternal)
-        prompt+= " Include 2 from external sources"
-    if(specs)
-
-
+async function generateQuestions(notes) {
 
     const response = await fetch('https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=AIzaSyDGn08OgvqZ2FveNxv65dqldkgQ85YNV7E', {
     method: 'POST',
@@ -41,7 +34,7 @@ async function generateQuestions(notes, specs) {
     })
   });
     const questions = await response.json();
-    return movies;
+    return questions;
 }
 
 

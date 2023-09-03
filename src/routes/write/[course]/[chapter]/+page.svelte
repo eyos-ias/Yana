@@ -499,7 +499,10 @@
 	}
 	.alert
 	{ 
-	position: sticky;
+	position: fixed;
+		top: 30px;
 	 z-index:10;
+		width: fit-content;
+		padding: 7px 15px;
 	 }
 </style>

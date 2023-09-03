@@ -203,6 +203,7 @@
 						<ul class="dropdown">
 							<button on:click={(e) => changeTag(e.target.textContent, idx)}>Heading</button>
 							<button on:click={(e) => changeTag(e.target.textContent, idx)}>Quote</button>
+							<button on:click={(e) => changeTag()}>AI Expand</button>
 						</ul>
 					</span>
 					<p
@@ -271,7 +272,6 @@
 			buttonText = 'Generate Quiz';
 			printPdf(JSON.parse(dataWithoutBackticks));
 			//printPdf(questionSet1.candidates[0]);
-            
 		}}>{buttonText}</button
 	>
 

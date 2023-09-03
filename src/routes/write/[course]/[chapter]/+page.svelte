@@ -5,7 +5,7 @@
 	import { page } from '$app/stores';
 	import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.js';
-	import { AskNotes, generateQuestions, summarizeNotes } from '../../../api/AI.js';
+	import { AskNotes, generateQuestions, summarizeNotes, ExplandNotes } from '../../../api/AI.js';
 	//import {printChapterPdf} from '../../../../lib/server/pdf/generateChapterPdf.js';
 	import pdfMake from 'pdfmake/build/pdfmake';
 	import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -203,7 +203,18 @@
 						<ul class="dropdown">
 							<button on:click={(e) => changeTag(e.target.textContent, idx)}>Heading</button>
 							<button on:click={(e) => changeTag(e.target.textContent, idx)}>Quote</button>
-							<button on:click={(e) => changeTag()}>AI Expand</button>
+							<button on:click={async () => {
+								let reserve = blocks[idx].html;
+								blocks[idx].html = "Loading...";
+								let expandedNote;
+								try{
+									expandedNote = await ExplandNotes(reserve);
+									blocks[idx].html = expandedNote.candidates[0].output.replace(/\*/g, '');
+								}catch (e) {
+								  blocks[idx].html = reserve;
+								}
+
+							}}>AI Expand</button>
 						</ul>
 					</span>
 					<p

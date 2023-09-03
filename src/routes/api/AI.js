@@ -64,7 +64,7 @@ async function ExplandNotes(paragraph) {
         body: JSON.stringify({
             'prompt': {
                 'text': paragraph +
-                 " expand on this topic"
+                 " expand on this paragraph, respond in text no markup."
             },
             'temperature': 1,
             'candidateCount': 2

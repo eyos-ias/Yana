@@ -113,7 +113,13 @@
 
 	function printPdf(quizData, notes) {
 		const docDefintion = {
-			content: []
+			content: [],
+			footer:{
+				text: 'Y.A.N.A',
+				fontSize: 8,
+				bold: true,
+				alignment: 'center'
+			}
 		};
         const questions = quizData;
 		docDefintion.content.push({

@@ -59,7 +59,7 @@
         background: rgba(255, 0, 0, 0.32);
     }
     .correct{
-        background: rgba(173, 255, 47, 0.36);
+        background: #53E97C;
     }
     .showAnswer{
         display: block;

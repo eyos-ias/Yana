@@ -4,7 +4,7 @@
    
     import {onMount, } from "svelte"
     import {auth} from "../../lib/firebase/firebase"
-
+    import {getFirestore, setDoc, doc} from "firebase/firestore"
 
 
     let register = true
@@ -13,6 +13,18 @@
     let confirmPassword = ''
     let error = ""
 
+   const addUserDoc  = async emailAdd =>{
+    const db = getFirestore()
+    const docRef = doc(db, "users", emailAdd)
+    try {
+        await setDoc(docRef, { dateCreated:Date.now() })
+        console.log("user doc added")
+    } catch (error) {
+        console.log(error)
+    }
+    
+   }
+    
 
     const showError = (text) =>{
         error = text
@@ -26,7 +38,8 @@
 
         if (register && password  === confirmPassword){
             try {
-                await authHandlers.signUp(email, password)
+                await addUserDoc(email)
+                await authHandlers.signUp(email, password)    
             } catch (error) {
                 showError(error.message)
                 console.log(error)
@@ -41,9 +54,9 @@
 
 
 
-        if ($authStore.currentUser){
+         if ($authStore.currentUser){
             window.location.href = "/dashboard"
-        }
+        } 
     }
 </script>
 

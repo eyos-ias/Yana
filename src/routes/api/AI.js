@@ -37,4 +37,23 @@ async function summarizeNotes(notes) {
     return summary;
 }
 
-export { generateQuestions, summarizeNotes };
+async function AskNotes(notes,userquestion) {
+  const response = await fetch('https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=AIzaSyDGn08OgvqZ2FveNxv65dqldkgQ85YNV7E', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          'prompt': {
+              'text': notes +
+                  userquestion + " based on the above text"
+          },
+          'temperature': 1,
+          'candidateCount': 2
+      })
+  });
+  const answer = await response.json();
+  return answer;
+}
+
+export { generateQuestions, summarizeNotes,AskNotes };

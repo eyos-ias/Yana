@@ -5,7 +5,7 @@
 	import { page } from '$app/stores';
 	import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 	import { db } from '$lib/firebase/firebase.js';
-	import { generateQuestions, summarizeNotes } from '../../../api/AI.js';
+	import { AskNotes, generateQuestions, summarizeNotes } from '../../../api/AI.js';
 	//import {printChapterPdf} from '../../../../lib/server/pdf/generateChapterPdf.js';
 	import pdfMake from 'pdfmake/build/pdfmake';
 	import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -23,6 +23,8 @@
 	let showOptions = null;
 	let buttonText = 'Generate Quiz';
 	let summarizeButtonText = 'Summarize';
+	$: Theusersquestion = "";
+	let Asktext = 'Ask question';
 
 	let blocks = [{ id: 654684, html: 'Loading notes...', tag: 'h1' }];
 	$: {
@@ -141,7 +143,7 @@
         }),
       }
     );
-		pdfMake.createPdf(docDefintion).download('pdfexample');
+		pdfMake.createPdf(docDefintion).open();
 	}
 </script>
 
@@ -287,9 +289,28 @@
 				{ id: uuid(), tag: 'p', html: questionSet1.candidates[0].output }
 			];
 			summarizeButtonText = 'Summarize';
-		}}>{summarizeButtonText}</button
-	>
+		}}>{summarizeButtonText}</button>
 </div>
+<div class="join">
+	<input class="input input-bordered join-item" placeholder="Question" bind:value={Theusersquestion}/>
+	<button class="btn join-item  btn-secondary"
+	on:click={async () => {
+		Asktext = 'Loading...';
+		let notes = blocks.map((ele) => {
+			if (ele.tag === 'p') return ele.html;
+		});
+		let questionSet1 = await AskNotes(notes,Theusersquestion);
+		blocks = [
+			...blocks,
+			{ id: uuid(), tag: 'h1', html: 'Question' },
+			{	id : uuid() , tag : 'p' , html : Theusersquestion},
+			{ id: uuid(), tag: 'h1', html: 'Answer' },
+			{ id: uuid(), tag: 'p', html: questionSet1.candidates[0].output }
+		];
+		Asktext = 'Ask Question';
+		Theusersquestion= "";
+	}}>{Asktext}</button>
+  </div>
 
 <style>
 	/** {*/

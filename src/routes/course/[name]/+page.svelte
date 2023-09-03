@@ -129,10 +129,14 @@
 			bold: true,
 			margin:[0, 10, 0, 20]
 		})
-		docDefintion.content.push({
-			text: notes,
-			pageBreak: 'after'
-		})
+      
+        for (let note in notes){
+         docDefintion.content.push({
+			text: notes[note],
+			//pageBreak: 'after'
+		})   
+        }
+		
 
 		docDefintion.content.push({
 			text: 'Quiz',
@@ -181,7 +185,10 @@
         const dataWithoutBackticks = questionSet.candidates[0].output.replace(/^```json|```$/g, '');
         console.log(JSON.parse(dataWithoutBackticks));
         //:TODO update here
-        printPdf(JSON.parse(dataWithoutBackticks), notes[0]);
+        
+        
+
+        printPdf(JSON.parse(dataWithoutBackticks), notes);
         
 
 

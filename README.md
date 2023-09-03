@@ -1,4 +1,5 @@
 # Yana - Ai based note taking and learning platform
+![yana](https://github.com/doniverse/Yana/assets/75771087/4b8f2d9a-133d-4469-a758-2aa492d4b13b)
 
 Welcome to the Yana repository  , Yana is a note taking app that stores all your notes on the cloud ,  uses ai to read and understand your notes and create exam preparation questions and quizzes based on that in an organized manner
 

@@ -10,6 +10,7 @@
 	import pdfMake from 'pdfmake/build/pdfmake';
 	import pdfFonts from 'pdfmake/build/vfs_fonts';
 
+	
 	let focusElementId;
 	let autoFocus = false;
 	afterUpdate(() => {
@@ -51,6 +52,7 @@
 				const data = docSnap.data();
 				if (data.blocks.length <= 0) blocks = [{ id: uuid(), html: 'Start writing', tag: 'p' }];
 				else blocks = data.blocks;
+				//console.log(typeof data.blocks[0].html);
 			}
 		} catch (error) {
 			console.error('Error fetching sub-collection documents:', error);
@@ -109,12 +111,34 @@
 		else if (preferedTag === 'Quote') blocks[index].tag = 'q';
 	}
 
-	function printPdf(quizData) {
+	function printPdf(quizData, notes) {
 		const docDefintion = {
-			content: []
+			content: [],
+			footer:{
+				text: 'Y.A.N.A',
+				fontSize: 8,
+				bold: true,
+				alignment: 'center'
+			}
 		};
         const questions = quizData;
+		docDefintion.content.push({
+			text: 'Notes',
+			fontSize: 28,
+			bold: true,
+			margin:[0, 10, 0, 20]
+		})
+		docDefintion.content.push({
+			text: notes,
+			pageBreak: 'after'
+		})
 
+		docDefintion.content.push({
+			text: 'Quiz',
+			fontSize: 28,
+			bold: true,
+			margin:[0, 10, 0, 20]
+		})
 		questions.forEach((q, index) => {
 			docDefintion.content.push(
 				{ text: `Question ${index + 1}: ${q.question}`, bold: true },
@@ -299,12 +323,12 @@
 				if (ele.tag === 'p') return ele.html;
 			});
 			let questionSet1 = await generateQuestions(notes);
+			console.log(notes);
 			
-			//console.log(typeof questionSet1.candidates[0].output);
             const dataWithoutBackticks = questionSet1.candidates[0].output.replace(/^```json|```$/g, '');			//console.log(JSON.parse(dataWithoutBackticks));
 			buttonText = 'Generate Quiz';
-			printPdf(JSON.parse(dataWithoutBackticks));
-			//printPdf(questionSet1.candidates[0]);
+			printPdf(JSON.parse(dataWithoutBackticks), notes[0]);
+			
 		}}>{buttonText}</button
 	>
 

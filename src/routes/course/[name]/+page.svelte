@@ -1,14 +1,16 @@
 <script>
-    import {collection, getDocs, doc, addDoc, setDoc, query, where } from "firebase/firestore";
+    import {collection, getDocs, doc, addDoc, setDoc, query, where, getDoc} from "firebase/firestore";
     import {db} from "$lib/firebase/firebase.js";
     import { page } from '$app/stores'
-    import {authStore} from "../../../stores/authStore.js";
     import {onMount} from "svelte";
+    import {v4 as uuid} from "uuid";
+    import {generateQuestions} from "../../api/AI.js";
 
     let listOfChapters = []
     let courseName = $page.params.name
     let newChapter = "";
     let dataLoading = true;
+    let exportButtonText = "Export with Quiz"
     async function getChaptersList(){
         
         try {
@@ -40,8 +42,7 @@
     })
 
     async function createChapter(chapterName){
-
-            try {
+        try {
                 // Reference to the user's document in the "users" collection
                 const email = localStorage.getItem('email');
                 const userDocRef = doc(db, 'users', email);
@@ -80,6 +81,51 @@
         }
 
 
+    async function getNote(courseName, chapterName) {
+        let blocks = [];
+        try {
+            // Reference to the user's document in the "users" collection
+            const email = localStorage.getItem('email');
+            const userDocRef = doc(db, 'users', email);
+            // Reference to the "courses" subcollection within the user's document
+            const coursesCollectionRef = collection(userDocRef, 'courses');
+            // Reference to the specific course document within the "courses" subcollection
+            const courseDocRef = doc(coursesCollectionRef, courseName);
+            // Reference to the "chapters" subcollection within the course document
+            const chaptersCollectionRef = collection(courseDocRef, 'chapters');
+            // Fetching document with chapter name
+            const docRef = doc(chaptersCollectionRef, chapterName);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                blocks = data.blocks;
+                return blocks;
+            }
+        } catch (error) {
+            console.error('Error fetching sub-collection documents:', error);
+            throw error;
+        }
+    }
+
+    async function exportWithQuiz(idx){
+        let blocks = await getNote(courseName, listOfChapters[idx]);
+        console.log(blocks)
+        let notes = blocks.map((ele) => {
+            if (ele.tag === 'p') return ele.html;
+         });
+         let questionSet = await generateQuestions(notes);
+        const dataWithoutBackticks = questionSet.candidates[0].output.replace(/^```json|```$/g, '');
+        console.log(JSON.parse(dataWithoutBackticks));
+        //:TODO update here
+        //printPdf(JSON.parse(dataWithoutBackticks));
+
+
+
+    }
+
+
+
+
 $:{
  console.log(listOfChapters);
 }
@@ -96,11 +142,17 @@ $:{
         <span>{courseName}</span>
     </div>
     <div class = "mygrid">
-        {#each listOfChapters as chapter }
+        {#each listOfChapters as chapter, idx }
         <div class="block my-2">
-            <a href="../write/{courseName}/{chapter}">
-                <div class="card w-96 bg-base-100 shadow-xl ">
-                    <div class="card-body" >
+            <div class="card w-96 bg-base-100 shadow-xl ">
+                <button class="btn btn-neutral btn-xs w-fit self-end mt-2 mr-2" on:click={async ()=>{
+                        exportButtonText = "Loading...";
+                        await exportWithQuiz(idx);
+                        exportButtonText = "Export With Quiz";
+                }}>{exportButtonText}</button>
+                <a href="../write/{courseName}/{chapter}">
+                <div>
+                    <div class="card-body py-2 px-6" >
                         <div class="badge badge-success gap-2">
                             Template
                         </div>
@@ -109,6 +161,8 @@ $:{
                     </div>
                 </div>
             </a>
+            </div>
+
         </div>
 
 

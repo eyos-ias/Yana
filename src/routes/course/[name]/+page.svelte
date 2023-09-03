@@ -136,7 +136,7 @@
 			//pageBreak: 'after'
 		})   
         }
-		
+		docDefintion.content.push({ text: '', pageBreak: 'after' });
 
 		docDefintion.content.push({
 			text: 'Quiz',

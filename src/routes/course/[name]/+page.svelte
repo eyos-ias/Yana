@@ -1,10 +1,14 @@
 <script>
+
+
     import {collection, getDocs, doc, addDoc, setDoc, query, where, getDoc} from "firebase/firestore";
     import {db} from "$lib/firebase/firebase.js";
     import { page } from '$app/stores'
     import {onMount} from "svelte";
     import {v4 as uuid} from "uuid";
     import {generateQuestions} from "../../api/AI.js";
+    import pdfMake from 'pdfmake/build/pdfmake';
+	import pdfFonts from 'pdfmake/build/vfs_fonts';
 
     let listOfChapters = []
     let courseName = $page.params.name
@@ -39,6 +43,7 @@
 
     onMount(()=>{
         getChaptersList();
+        pdfMake.vfs = pdfFonts.pdfMake.vfs;
     })
 
     async function createChapter(chapterName){
@@ -107,6 +112,69 @@
         }
     }
 
+    function printPdf(quizData, notes) {
+		const docDefintion = {
+			content: [],
+			footer:{
+				text: 'Y.A.N.A',
+				fontSize: 8,
+				bold: true,
+				alignment: 'center'
+			}
+		};
+        const questions = quizData;
+		docDefintion.content.push({
+			text: 'Notes',
+			fontSize: 28,
+			bold: true,
+			margin:[0, 10, 0, 20]
+		})
+      
+        for (let note in notes){
+         docDefintion.content.push({
+			text: notes[note],
+			//pageBreak: 'after'
+		})   
+        }
+		docDefintion.content.push({ text: '', pageBreak: 'after' });
+
+		docDefintion.content.push({
+			text: 'Quiz',
+			fontSize: 28,
+			bold: true,
+			margin:[0, 10, 0, 20]
+		})
+		questions.forEach((q, index) => {
+			docDefintion.content.push(
+				{ text: `Question ${index + 1}: ${q.question}`, bold: true },
+				{   type: 'lower-alpha',
+					ol: q.options.map((opt, optIndex) => {
+						return {
+							text: `${opt}`,
+							margin: [20, 0, 0, 0]
+						};
+					})
+				},
+				//{ text: `Correct Answer: ${q.answer}\n\n` }
+			);
+		});
+
+        docDefintion.content.push({ text: '', pageBreak: 'after' });
+
+        docDefintion.content.push(
+      { text: 'Answer Key', bold: true },
+      {
+        ul: questions.map((q, index) => {
+          return {
+            text: `Question ${index + 1}: ${q.answer}`,
+            margin: [20, 0, 0, 0],
+          };
+        }),
+      }
+    );
+		pdfMake.createPdf(docDefintion).download("quiz");
+	}
+
     async function exportWithQuiz(idx){
         let blocks = await getNote(courseName, listOfChapters[idx]);
         console.log(blocks)
@@ -117,7 +185,11 @@
         const dataWithoutBackticks = questionSet.candidates[0].output.replace(/^```json|```$/g, '');
         console.log(JSON.parse(dataWithoutBackticks));
         //:TODO update here
-        //printPdf(JSON.parse(dataWithoutBackticks));
+        
+        
+
+        printPdf(JSON.parse(dataWithoutBackticks), notes);
+        
 
 
 
@@ -149,6 +221,8 @@ $:{
                         exportButtonText = "Loading...";
                         await exportWithQuiz(idx);
                         exportButtonText = "Export With Quiz";
+
+
                 }}>{exportButtonText}</button>
                 <a href="../write/{courseName}/{chapter}">
                 <div>

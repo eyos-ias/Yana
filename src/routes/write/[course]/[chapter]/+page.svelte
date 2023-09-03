@@ -33,6 +33,7 @@
 		if (blocks.length <= 0) blocks = [{ id: uuid(), html: 'Start writing', tag: 'p' }];
 	}
 
+	
 	async function getNote() {
 		let courseName = $page.params.course;
 		let chapterName = $page.params.chapter;

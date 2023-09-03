@@ -8,7 +8,7 @@
 	import { AskNotes, generateQuestions, summarizeNotes, ExplandNotes } from '../../../api/AI.js';
 	//import {printChapterPdf} from '../../../../lib/server/pdf/generateChapterPdf.js';
 	import pdfMake from 'pdfmake/build/pdfmake';
-	import pdfFonts from 'pdfmake/build/vfs_fonts';
+	//import {pdfFonts} from 'pdfmake/build/vfs_fonts';
 	import {goto} from "$app/navigation";
 
 	let focusElementId;
@@ -63,7 +63,7 @@
 
 	onMount(() => {
 		getNote();
-		pdfMake.vfs = pdfFonts.pdfMake.vfs;
+		//pdfMake.vfs = pdfFonts.pdfMake.vfs;
 	});
 
 	async function saveNote() {

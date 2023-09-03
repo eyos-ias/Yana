@@ -8,7 +8,7 @@
     import {v4 as uuid} from "uuid";
     import {generateQuestions} from "../../api/AI.js";
     import pdfMake from 'pdfmake/build/pdfmake';
-	import pdfFonts from 'pdfmake/build/vfs_fonts';
+	//import {pdfFonts} from 'pdfmake/build/vfs_fonts';
 
     let listOfChapters = []
     let courseName = $page.params.name
@@ -43,7 +43,7 @@
 
     onMount(()=>{
         getChaptersList();
-        pdfMake.vfs = pdfFonts.pdfMake.vfs;
+        //pdfMake.vfs = pdfFonts.pdfMake.vfs;
     })
 
     async function createChapter(chapterName){
